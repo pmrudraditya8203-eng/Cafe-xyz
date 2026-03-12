@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafe XYZ - Refreshment with us</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,sans-serif;background:#fff;color:#333;transition:all 0.3s;}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:#cce6d0;}
+header h1{margin:0;font-size:1.8em;}
+/* Smaller hero button */
+.menu-button{
+  margin-top:15px;
+  padding:8px 18px;
+  background:#4CAF50;
+  color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  font-size:0.9em;
+}
+.theme-toggle{padding:10px 20px;background:#4CAF50;color:white;border:none;border-radius:5px;cursor:pointer;}
+nav{background:#ffe6e6;display:flex;justify-content:center;flex-wrap:wrap;}
+nav a{color:#333;text-decoration:none;padding:12px 20px;font-weight:bold;}
+nav a:hover{background:#ffd6d6;border-radius:4px;}
+.hero-slider{position:relative;overflow:hidden;height:400px;}
+.hero-slider img{width:100%;height:400px;object-fit:cover;display:none;}
+.hero-slider img.active{display:block;}
+.hero-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;text-align:center;text-shadow:2px 2px 8px #000;z-index:10;font-size:2.2em;font-weight:bold;}
+section{padding:50px 20px;text-align:center;}
+section h2{margin-bottom:20px;color:#4CAF50;}
+.features{display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px;padding:10px;}
+.features div{background:#ffe6e6;padding:20px;border-radius:10px;width:200px;}
+.about{max-width:800px;margin:auto;text-align:justify;line-height:1.6;}
+.horizontal-scroll{display:flex;overflow-x:auto;scroll-behavior:smooth;gap:20px;padding:10px 0;}
+.horizontal-scroll img{height:200px;border-radius:10px;}
+.scroll-container{position:relative;}
+.offers div{background:#cce6d0;margin:15px auto;padding:20px;max-width:600px;border-radius:10px;}
+/* Pop-out menu vertical style */
+.menu-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;justify-content:center;align-items:center;
+  z-index:1000;padding:20px;
+}
+.menu-content{
+  background:#fff;
+  border-radius:10px;
+  max-width:90%;max-height:90%;
+  overflow-y:auto;
+  scroll-behavior: smooth;
+  padding:20px;
+  text-align:center;
+}
+.menu-img{
+  width:100%;
+  margin-bottom:20px;
+  border-radius:10px;
+  display:block;
+}
+/* Floating WhatsApp button */
+.whatsapp-floating{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:1100;
+  background:#25D366;
+  color:white;
+  padding:15px 20px;
+  border-radius:50px;
+  font-weight:bold;
+  text-decoration:none;
+  box-shadow:0 4px 6px rgba(0,0,0,0.3);
+}
+.whatsapp-floating:hover{background:#1ebe57;}
+/* Tooltip above WhatsApp */
+.whatsapp-tooltip{
+  position:fixed;
+  bottom:70px;
+  right:25px;
+  z-index:1101;
+  background:#333;
+  color:white;
+  padding:5px 10px;
+  border-radius:5px;
+  font-size:0.8em;
+  white-space:nowrap;
+  box-shadow:0 2px 4px rgba(0,0,0,0.2);
+}
+footer{background:#ffe6e6;padding:20px;text-align:center;}
+body.dark{background:#222;color:#eee;}
+body.dark nav{background:#333;}
+body.dark nav a{color:#fff;}
+body.dark nav a:hover{background:#555;}
+body.dark .features div{background:#555;color:#fff;}
+body.dark .offers div{background:#444;color:#fff;}
+</style>
+</head>
+<body>
+<header>
+<h1>Cafe XYZ</h1>
+<button class="theme-toggle" onclick="toggleTheme()">Change Theme</button>
+</header>
+<nav>
+<a href="#hero">Home</a>
+<a href="#features">Features</a>
+<a href="#about">About</a>
+<a href="#bestsellers">Best Sellers</a>
+<a href="#gallery">Gallery</a>
+<a href="#offers">Offers</a>
+<a href="#location">Location</a>
+</nav>
+<!-- Hero Slider -->
+<section id="hero" style="position:relative;">
+<div class="hero-slider">
+<img src="https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg" class="active" alt="Hero 1">
+<img src="https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg" alt="Hero 2">
+<img src="https://images.pexels.com/photos/33915237/pexels-photo-33915237.jpeg" alt="Hero 3">
+</div>
+<div class="hero-text">
+<p>Refreshment with us</p>
+<button class="menu-button" onclick="openMenu()">View Menu</button>
+</div>
+</section>
+<section id="features">
+<h2>Our Features</h2>
+<div class="features">
+<div>Coffee & Beverages</div>
+<div>Delicious Snacks</div>
+<div>Wi-Fi & Workspace</div>
+<div>Cozy Seating</div>
+<div>Live Music</div>
+<div>Outdoor Seating</div>
+</div>
+</section>
+<section id="about">
+<h2>About Us</h2>
+<div class="about">
+Welcome to Cafe XYZ! We are passionate about bringing the best flavors and a cozy ambiance to every visitor. From freshly brewed coffee to mouth-watering pizzas and desserts, our cafe is designed to delight all your senses. Whether you're catching up with friends, working remotely, or simply enjoying a quiet moment, Cafe XYZ is your perfect refreshment destination.
+</div>
+</section>
+<!-- Pop-Out Menu -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-content">
+    <span class="menu-close" onclick="closeMenu()" style="position:absolute;top:10px;right:15px;font-size:25px;cursor:pointer;color:#333;">&times;</span>
+    <img src="https://images.pexels.com/photos/20371527/pexels-photo-20371527.jpeg" class="menu-img" alt="Menu 1">
+    <img src="https://images.pexels.com/photos/5793778/pexels-photo-5793778.jpeg" class="menu-img" alt="Menu 2">
+  </div>
+</div>
+<!-- Floating WhatsApp + tooltip -->
+<div class="whatsapp-tooltip">For any enquiry, contact us</div>
+<a href="https://wa.me/919876543210" target="_blank" class="whatsapp-floating">WhatsApp</a>
+<!-- Best Sellers -->
+<section id="bestsellers">
+<h2>Best Sellers</h2>
+<div class="scroll-container">
+<div class="horizontal-scroll" id="bestScroll">
+<img src="https://images.pexels.com/photos/5864543/pexels-photo-5864543.jpeg" alt="Pizza">
+<img src="https://images.pexels.com/photos/12540685/pexels-photo-12540685.png" alt="Brownie">
+<img src="https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg" alt="Pasta">
+<img src="https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg" alt="Dessert">
+</div>
+</div>
+</section>
+<!-- Gallery -->
+<section id="gallery">
+<h2>Gallery</h2>
+<div class="scroll-container">
+<div class="horizontal-scroll" id="galleryScroll">
+<img src="https://images.pexels.com/photos/3616956/pexels-photo-3616956.jpeg" alt="Gallery 1">
+<img src="https://images.pexels.com/photos/3201922/pexels-photo-3201922.jpeg" alt="Gallery 2">
+<img src="https://images.pexels.com/photos/239975/pexels-photo-239975.jpeg" alt="Gallery 3">
+<img src="https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg" alt="Gallery 4">
+<img src="https://images.pexels.com/photos/7613568/pexels-photo-7613568.jpeg" alt="Gallery 5">
+<img src="https://images.pexels.com/photos/769969/pexels-photo-769969.jpeg" alt="Gallery 6">
+</div>
+</div>
+</section>
+<section id="offers">
+<h2>Special Offers</h2>
+<div class="offers">
+<div>Buy 1 Get 1 Free on All Pizzas - Every Monday!</div>
+<div>20% Off on Desserts for Students - Every Friday!</div>
+<div>Happy Hour Drinks 5 PM - 7 PM - Daily!</div>
+</div>
+</section>
+<section id="location">
+<h2>Our Location</h2>
+<p><strong>Address:</strong> Cafe XYZ, 123 MG Road, Bhubaneswar, Odisha, India</p>
+<p><strong>Opening Hours:</strong> Monday - Sunday: 8:00 AM - 10:00 PM</p>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.992237172959!2d85.8267!3d20.2961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a190c7f9d1c5b7b%3A0xa2b7fdbf0b6f3a9f!2sBhubaneswar!5e0!3m2!1sen!2sin!4v1610000000000!5m2!1sen!2sin" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+</section>
+<footer>
+&copy; 2026 Cafe XYZ | Refreshment with us
+</footer>
+<script>
+// Hero slider
+let current=0; 
+const slides=document.querySelectorAll('.hero-slider img');
+function showSlide(index){
+  slides.forEach((img)=>img.classList.remove('active'));
+  slides[index].classList.add('active');
+}
+function nextSlide(){
+  current=(current+1)%slides.length;
+  showSlide(current);
+}
+setInterval(nextSlide,3000);
+// Auto-loop horizontal scroll
+function autoScroll(id,speed){
+  const container = document.getElementById(id);
+  let scrollAmount = 0;
+  setInterval(()=>{
+    if(scrollAmount >= container.scrollWidth - container.clientWidth) scrollAmount = 0;
+    scrollAmount += 1;
+    container.scrollLeft = scrollAmount;
+  }, speed);
+}
+autoScroll('bestScroll',20);
+autoScroll('galleryScroll',20);
+// Menu overlay functions
+function openMenu(){document.getElementById('menuOverlay').style.display='flex';}
+function closeMenu(){document.getElementById('menuOverlay').style.display='none';}
+// Close menu on click outside
+document.getElementById('menuOverlay').addEventListener('click', function(e){
+  if(e.target === this){closeMenu();}
+});
+// Theme toggle
+function toggleTheme(){document.body.classList.toggle('dark');}
+</script>
+</body>
+</html>
